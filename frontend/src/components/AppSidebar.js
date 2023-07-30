@@ -30,7 +30,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <span style={{fontFamily: 'MV Boli', fontSize: '24px'}}>Student office</span>
+        <span style={{fontFamily: 'MV Boli', fontSize: '24px'}}>Shopify update</span>
         {/* <img src={logo} /> */}
         {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />

@@ -62,7 +62,7 @@ const GetAScholarship = React.lazy(() => import('./views/statements/GetAScholars
 const ShopifyProducts = React.lazy(() => import('./views/products/ShopifyProducts'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/shopify/products', exact: true, name: 'Products' },
   
   { path: '/shopify/products', name: 'Shopify products', element: ShopifyProducts },
   { path: '/statements/academic-leave', name: 'Akademik ta\'til uchun', element: AcademicLeave },

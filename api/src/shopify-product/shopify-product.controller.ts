@@ -1,21 +1,30 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Body, Post, Query, Put } from "@nestjs/common";
 import { AxiosResponse } from "axios";
+import { GetProductPriceService } from "./get-product-price.service";
 import { ShopifyProductService } from "./shopify-product.service";
 
 @Controller('shopify-product')
 export class ShopifyProductController{
 
     constructor(
-        private service: ShopifyProductService    
+        private service: ShopifyProductService,
+        private priceService: GetProductPriceService    
     ){}
     
-    @Get('update-price')
-    async updateProductPrice(){
+    @Get('get-price')
+    async getPrice(@Query() {link}:any){
         try{
-            const url = 'https://www.broadbandbuyer.com/products/36913-netgear-gs308-300uks/'
-            // const url = 'https://www.box.co.uk/TL-SG1016-TP-Link-TL-SG1016-16-Port-Gigabit-Switch_667152.html'
-            // const url = 'https://hflbroadband.co.uk/products/netgear-m4300-28g-poe?pr_prod_strat=use_description&pr_rec_id=626d15a77&pr_rec_pid=7801675088128&pr_ref_pid=7873798177024&pr_seq=uniform'
-            const response = await this.service.updateProductPrice(url, {});
+            const response = await this.priceService.getPrice(link);
+            return response;
+        }catch(e){
+            throw new Error('Failed to get products list')
+        }
+    }
+
+    @Put('update-price')
+    async updateProductPrice(@Body() {id, variants_id, newPrice}:any){
+        try{
+            const response = await this.service.updateProductPrice(id, variants_id, newPrice);
             return response;
         }catch(e){
             throw new Error('Failed to get products list')
@@ -23,12 +32,22 @@ export class ShopifyProductController{
     }
 
     @Get('list')
-    async getAllProducts():Promise<AxiosResponse<any>>{
+    async getAllProducts():Promise<any>{
         try{
             const response = await this.service.getAllProducts();
             return response.data;
         }catch(e){
             throw new Error('Failed to get products list')
+        }
+    }
+
+    @Post('link-product-url')
+    async LinkProductUrl(@Body() body: any){
+        try{
+            const response = await this.service.ProductUrl(body);
+            return response.data;
+        }catch(e){
+            throw new Error('Failed to link product Url')
         }
     }
 }
